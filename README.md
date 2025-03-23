@@ -10,16 +10,6 @@ A modern Rust backend starter template using:
 - **WebSocket** support
 - **Jemalloc** for improved memory performance
 
-## Features
-
-- Fully async, Tokio-based architecture
-- GraphQL support with Apollo Tracing and Dataloader
-- REST and WebSocket routes via Axum
-- Redis for caching/session/pub-sub
-- PostgreSQL with bb8 connection pooling
-- Firebase-based authentication
-- Minimal boilerplate, production-ready setup
-
 ## Requirements
 
 - Rust 1.85+ (2024 edition)
