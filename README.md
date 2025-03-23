@@ -7,7 +7,6 @@ A modern Rust backend starter template using:
 - **PostgreSQL** via `tokio-postgres` and `bb8` async connection pool
 - **Redis** via `bb8-redis` async connection pool
 - **Firebase Auth** integration
-- **Async-OpenAI** client
 - **WebSocket** support
 - **Jemalloc** for improved memory performance
 
