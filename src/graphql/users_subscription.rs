@@ -13,7 +13,7 @@ impl UsersSubscriptionRoot {
     async fn select_user_by_id<'a>(
         &self,
         _context: &Context<'a>,
-        _id: String,
+        _id: i64,
     ) -> Pin<Box<dyn Stream<Item = FieldResult<User>> + Send + '_>> {
         let (tx, rx) = mpsc::channel::<FieldResult<User>>(20);
 
