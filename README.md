@@ -21,7 +21,7 @@ A modern Rust backend starter template using:
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/your-username/rust-axum-async-graphql-postgres-redis-starter.git
+git clone https://github.com/rust-dd/rust-axum-async-graphql-postgres-redis-starter.git
 cd rust-axum-async-graphql-postgres-redis-starter
 ```
 
