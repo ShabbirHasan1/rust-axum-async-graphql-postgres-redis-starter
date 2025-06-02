@@ -2,7 +2,7 @@ use anyhow::Result;
 use async_graphql::{Schema, dataloader::DataLoader};
 use axum::{Router, http::Method, routing::get};
 use dotenvy::dotenv;
-use firebase_auth::FirebaseAuth;
+use firebase_auth::{FirebaseAuth, FirebaseAuthState};
 use rust_axum_async_graphql_postgres_redis_starter::{
     AppState,
     dataloaders::users,
@@ -57,7 +57,7 @@ async fn main() -> Result<()> {
         )
         .route("/v1/ws", get(graphql::ws_handler))
         .with_state(AppState {
-            firebase_auth,
+            auth: FirebaseAuthState::new(firebase_auth),
             schema,
         })
         .layer(CompressionLayer::new().gzip(true))

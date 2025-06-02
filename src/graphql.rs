@@ -47,7 +47,7 @@ pub async fn playground() -> impl IntoResponse {
 
 pub async fn handler(
     State(AppState {
-        firebase_auth,
+        auth: auth_state,
         schema,
         ..
     }): State<AppState>,
@@ -81,7 +81,7 @@ pub async fn handler(
             }
 
             let token = auth_header[prefix_len..].to_string();
-            match firebase_auth.verify::<FirebaseUser>(&token) {
+            match auth_state.firebase_auth.verify::<FirebaseUser>(&token) {
                 Ok(_) => schema.execute(req.into_inner()).await.into(),
                 Err(_) => return GraphQLResponse::from(Response::new("Invalid token")),
             }
@@ -100,11 +100,7 @@ struct WebSocketAuthPayload {
 }
 
 pub async fn ws_handler(
-    State(AppState {
-        firebase_auth,
-        schema,
-        ..
-    }): State<AppState>,
+    State(AppState { auth, schema, .. }): State<AppState>,
     protocol: GraphQLProtocol,
     websocket: WebSocketUpgrade,
 ) -> AxumResponse {
@@ -113,7 +109,7 @@ pub async fn ws_handler(
         .on_upgrade(move |stream| {
             GraphQLWebSocket::new(stream, schema.clone(), protocol)
                 .on_connection_init(move |value| {
-                    let firebase_auth = firebase_auth.clone();
+                    let auth = auth.clone();
                     async move {
                         if let Ok(WebSocketAuthPayload {
                             authorization,
@@ -137,7 +133,11 @@ pub async fn ws_handler(
                             let authorization = authorization.unwrap();
                             let authorization = authorization[7..].as_ref();
 
-                            if firebase_auth.verify::<FirebaseUser>(authorization).is_ok() {
+                            if auth
+                                .firebase_auth
+                                .verify::<FirebaseUser>(authorization)
+                                .is_ok()
+                            {
                                 tracing::info!("User connected");
                                 Ok(Data::default())
                             } else {

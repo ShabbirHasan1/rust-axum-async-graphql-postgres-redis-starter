@@ -1,5 +1,5 @@
 use async_graphql::Schema;
-use firebase_auth::FirebaseAuth;
+use firebase_auth::FirebaseAuthState;
 use graphql::{MutationRoot, QueryRoot, SubscriptionRoot};
 
 pub const DEFAULT_CACHE_EXPIRATION: u64 = 60 * 60;
@@ -15,6 +15,6 @@ pub mod types;
 
 #[derive(Clone)]
 pub struct AppState {
-    pub firebase_auth: FirebaseAuth,
+    pub auth: FirebaseAuthState,
     pub schema: Schema<QueryRoot, MutationRoot, SubscriptionRoot>,
 }
