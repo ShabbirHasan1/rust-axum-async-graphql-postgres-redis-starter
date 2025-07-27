@@ -11,6 +11,7 @@ pub mod dataloaders;
 pub mod graphql;
 pub mod postgres;
 pub mod redis;
+pub mod simdjson;
 pub mod types;
 
 #[derive(Clone)]
